@@ -1,5 +1,5 @@
 module.exports = app => {
-  const Events = app.controllers.eventsController
+  const Events = app.controllers.EventsController
 
   app.route('/events')
     .get(Events.getEvents)
