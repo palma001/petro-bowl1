@@ -13,15 +13,63 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host": "localhost:4000",
-  "basePath": "/api/",
+  "host": "localhost:3000",
+  "basePath": "",
   "tags": [
     {
       "name": "Users",
-      "description": "Operations about user",
+      "description": "Operations about users",
       "externalDocs": {
         "description": "Find out more about our store",
-        "url": "http://localhost:4000"
+        "url": "http://localhost:3000"
+      }
+    },
+    {
+      "name": "Events",
+      "description": "Operations about events",
+      "externalDocs": {
+        "description": "Find out more about our store",
+        "url": "http://localhost:3000"
+      }
+    },
+    {
+      "name": "Teams",
+      "description": "Operations about teams",
+      "externalDocs": {
+        "description": "Find out more about our store",
+        "url": "http://localhost:3000"
+      }
+    },
+    {
+      "name": "Competitors",
+      "description": "Operations about competitors",
+      "externalDocs": {
+        "description": "Find out more about our store",
+        "url": "http://localhost:3000"
+      }
+    },
+    {
+      "name": "Questions",
+      "description": "Operations about events",
+      "externalDocs": {
+        "description": "Find out more about our store",
+        "url": "http://localhost:3000"
+      }
+    },
+    {
+      "name": "Confrontation",
+      "description": "Operations about confrontation",
+      "externalDocs": {
+        "description": "Find out more about our store",
+        "url": "http://localhost:3000"
+      }
+    },
+    {
+      "name": "QuestionRound",
+      "description": "Operations about question round",
+      "externalDocs": {
+        "description": "Find out more about our store",
+        "url": "http://localhost:3000"
       }
     }
   ],
@@ -30,10 +78,10 @@
     "https"
   ],
   "paths": {
-    "/users": {
+    "/events": {
       "get": {
         "tags": [
-          "Users"
+          "Events"
         ],
         "summary": "Get user by user name",
         "description": "",
@@ -42,9 +90,9 @@
         ],
         "parameters": [
         	{
-        		"name": "page",
-        		"in": "query",
-        		"description": "Number of page",
+        		"name": "eventId",
+        		"in": "path",
+        		"description": "Identifer events",
         		"type": "integer",
             "format": "int64"
         	}
@@ -60,7 +108,7 @@
       },
       "post": {
         "tags": [
-          "Users"
+          "Events"
         ],
         "summary": "Create user",
         "description": "This can only be done by the logged in user.",
@@ -86,32 +134,28 @@
         }
       }
     },
-    "/users/{id}": {
+    "/events/{eventId}": {
       "get": {
         "tags": [
-          "Users"
+          "Events"
         ],
-        "summary": "Get user",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "getUser",
+        "summary": "Get user by user name",
+        "description": "",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "eventId",
             "in": "path",
-            "description": "id that need to be updated",
-            "required": true,
-            "type": "string"
+            "description": "Identifer events",
+            "type": "integer",
+            "format": "int64"
           }
-        ],
+        ], 
         "responses": {
           "200": {
             "description": "successful operation"
-          },
-          "400": {
-            "description": "Invalid user supplied"
           },
           "404": {
             "description": "User not found"
@@ -120,39 +164,25 @@
       },
       "put": {
         "tags": [
-          "Users"
+          "Events"
         ],
-        "summary": "Updated user",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "updateUser",
+        "summary": "Update user by event name",
+        "description": "",
         "produces": [
-          "application/xml",
           "application/json"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "eventId",
             "in": "path",
-            "description": "id that need to be updated",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Updated user object",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Users"
-            }
+            "description": "Identifer events",
+            "type": "integer",
+            "format": "int64"
           }
-        ],
+        ], 
         "responses": {
-          "201": {
+          "200": {
             "description": "successful operation"
-          },
-          "400": {
-            "description": "Invalid user supplied"
           },
           "404": {
             "description": "User not found"
@@ -161,30 +191,25 @@
       },
       "delete": {
         "tags": [
-          "Users"
+          "Events"
         ],
-        "summary": "Delete user",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "deleteUser",
+        "summary": "Delete event by eventId",
+        "description": "",
         "produces": [
-          "application/xml",
           "application/json"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "eventId",
             "in": "path",
-            "description": "The id that needs to be deleted",
-            "required": true,
-            "type": "string"
+            "description": "Identifer events",
+            "type": "integer",
+            "format": "int64"
           }
-        ],
+        ], 
         "responses": {
-          "201": {
+          "200": {
             "description": "successful operation"
-          },
-          "400": {
-            "description": "Invalid id supplied"
           },
           "404": {
             "description": "User not found"
@@ -192,70 +217,178 @@
         }
       }
     },
-    "/users/email/{email}": {
+    "events/{eventId}/teams": {
       "get": {
         "tags": [
-          "Users"
-        ],
-        "summary": "Get user for email",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "getUsersEmail",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "email",
-            "in": "path",
-            "description": "email that need to be updated",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation"
-          },
-          "400": {
-            "description": "Invalid user supplied"
-          },
-          "404": {
-            "description": "User not found"
-          }
-        }
+          "Teams"
+        ]
       }
     },
-    "/users/phone/{phone}": {
+    "/teams": {
+      "post": {
+        "tags": [
+          "Teams"
+        ]
+      }
+    },
+    "/teams/{teamId}": {
       "get": {
         "tags": [
-          "Users"
-        ],
-        "summary": "Get user for phone",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "getUserPhone",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "phone",
-            "in": "path",
-            "description": "Phone that need to be updated",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation"
-          },
-          "400": {
-            "description": "Invalid user supplied"
-          },
-          "404": {
-            "description": "User not found"
-          }
-        }
+          "Teams"
+        ]
+      },
+      "put": {
+        "tags": [
+          "Teams"
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Teams"
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Teams"
+        ]
+      }
+    },
+    "/teams/{teamId}/competitors": {
+      "get": {
+        "tags": [
+          "Competitors"
+        ]
+      }
+    },
+    "/competitors/": {
+      "post": {
+        "tags": [
+          "Competitors"
+        ]
+      }
+    },
+    "/competitors/{competitorsId}": {
+      "get": {
+        "tags": [
+          "Competitors"
+        ]
+      },
+      "put": {
+        "tags": [
+          "Competitors"
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Competitors"
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Competitors"
+        ]
+      }
+    },
+    "/questions": {
+      "get": {
+        "tags": [
+          "Questions"
+        ]
+      },
+      "post": {
+        "tags": [
+          "Questions"
+        ]
+      }
+    },
+    "/questions/{questionId}": {
+      "get": {
+        "tags": [
+          "Questions"
+        ]
+      },
+      "put": {
+        "tags": [
+          "Questions"
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Questions"
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Questions"
+        ]
+      }
+    },
+    "events/{eventId}/{phaseId}/confrontation": {
+      "get": {
+        "tags": [
+          "Confrontation"
+        ]
+      },
+      "post": {
+        "tags": [
+          "Confrontation"
+        ]
+      }
+    },
+    "events/{eventId}/{phaseId}/confrontation/{confrontationId}": {
+      "get": {
+        "tags": [
+          "Confrontation"
+        ]
+      },
+      "put": {
+        "tags": [
+          "Confrontation"
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Confrontation"
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Confrontation"
+        ]
+      }
+    },
+    "/confrontation/{confrontationId}/question-round/": {
+      "get": {
+        "tags": [
+          "QuestionRound"
+        ]
+      },
+      "post": {
+        "tags": [
+          "QuestionRound"
+        ]
+      }
+    },
+    "/confrontation/{confrontationId}/question-round/{questionRoundId}": {
+      "get": {
+        "tags": [
+          "QuestionRound"
+        ]
+      },
+      "put": {
+        "tags": [
+          "QuestionRound"
+        ]
+      },
+      "delete": {
+        "tags": [
+          "QuestionRound"
+        ]
+      },
+      "patch": {
+        "tags": [
+          "QuestionRound"
+        ]
       }
     }
   },
