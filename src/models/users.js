@@ -6,6 +6,14 @@ module.exports = (sequelize, DataType) => {
       primaryKey: true,
       autoIncrement: true
     },
+    userId: {
+      type: DataType.STRING,
+      primaryKey: true
+    },
+    eventId: {
+      type: DataType.STRING,
+      primaryKey: true
+    },
     name: {
       type: DataType.STRING,
       allowNull: false,
@@ -13,7 +21,14 @@ module.exports = (sequelize, DataType) => {
         notEmpty: true
       }
     },
-    password: {
+    lastname: {
+      type: DataType.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    },
+    rol: {
       type: DataType.STRING,
       allowNull: false,
       validate: {
@@ -23,6 +38,20 @@ module.exports = (sequelize, DataType) => {
     email: {
       type: DataType.STRING,
       unique: true,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    },
+    user: {
+      type: DataType.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    },
+    password: {
+      type: DataType.STRING,
       allowNull: false,
       validate: {
         notEmpty: true

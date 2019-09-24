@@ -1,6 +1,7 @@
 module.exports = app => {
 
-  const Users = app.db.models.Users
+  const Users = app.controllers.UserController
+  const middelware = app.libs.authorization
 
   app.get('/users/:id', (req, res) => {
     Users.findById(req.params.id, {
@@ -19,13 +20,9 @@ module.exports = app => {
         res.status(412).json({msg: error.message})
       })
   })
+  app.route('/users')
+    .post(middelware.admin, Users.createUser)
 
-  app.post('/users', (req, res) => {
-    Users.create(req.body)
-      .then(result => res.json(result))
-      .catch(error => {
-        res.status(412).json({msg: error.message})
-      })
-  })
-
+  app.route('/users/authorization')
+    .post(Users.authorization)
 }

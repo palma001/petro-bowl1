@@ -1,6 +1,6 @@
 const mysql2 = require('mysql2')
 module.exports = {
-  database: 'ntask',
+  database: 'petro_bowl',
   username: 'root',
   password: '',
   params: {

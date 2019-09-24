@@ -78,6 +78,100 @@
     "https"
   ],
   "paths": {
+    "/users/authorization": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "authorization user",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get all user",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "header token",
+            "type": "string"
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get users",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "header token",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/users"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
     "/events": {
       "get": {
         "tags": [
@@ -215,6 +309,11 @@
             "description": "User not found"
           }
         }
+      },
+      "patch": {
+        "tags": [
+          "Events"
+        ]
       }
     },
     "events/{eventId}/teams": {
@@ -222,16 +321,14 @@
         "tags": [
           "Teams"
         ]
-      }
-    },
-    "/teams": {
+      },
       "post": {
         "tags": [
           "Teams"
         ]
       }
     },
-    "/teams/{teamId}": {
+    "events/{eventId}/teams/{teamId}": {
       "get": {
         "tags": [
           "Teams"
@@ -258,16 +355,14 @@
         "tags": [
           "Competitors"
         ]
-      }
-    },
-    "/competitors/": {
+      },
       "post": {
         "tags": [
           "Competitors"
         ]
       }
     },
-    "/competitors/{competitorsId}": {
+    "/teams/{teamId}/competitors/{competitorsId}": {
       "get": {
         "tags": [
           "Competitors"
@@ -392,47 +487,54 @@
       }
     }
   },
-  "securityDefinitions": {
-    "petstore_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:pets": "modify pets in your account",
-        "read:pets": "read your pets"
-      }
-    },
-    "api_key": {
-      "type": "apiKey",
-      "name": "api_key",
-      "in": "header"
-    }
-  },
   "definitions": {
-    "Users": {
+    "authorization": {
       "type": "object",
       "properties": {
-        "email": {
+        "user": {
           "type": "string",
-          "required": true,
-          "example": "example@example.com"
-        },
-        "phoneNumber": {
-          "type": "string",
-          "example": "+584241234567"
+          "required": true
         },
         "password": {
           "type": "string",
-          "description": "The password must be 8 characters or more"
+          "required": true
+        }
+      }
+    },
+    "users": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "required": true
         },
-        "displayName": {
-          "type": "string"
+        "eventId": {
+          "type": "string",
+          "required": true
         },
-        "photoURL": {
-          "type": "string"
+        "name": {
+          "type": "string",
+          "required": true
         },
-        "disabled": {
-        	"type": "boolean"
+        "lastname": {
+          "type": "string",
+          "required": true
+        },
+        "rol": {
+          "type": "string",
+          "required": true
+        },
+        "email": {
+          "type": "string",
+          "required": true
+        },
+        "user": {
+          "type": "string",
+          "required": true
+        },
+        "password": {
+          "type": "string",
+          "required": true
         }
       }
     }
