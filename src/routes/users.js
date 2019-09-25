@@ -22,7 +22,7 @@ module.exports = app => {
   })
   
   app.route('/users')
-    .post(middelware.admin, Users.createUser)
+    .post(middelware.auth, Users.createUser)
 
   app.route('/users/authorization')
     .post(Users.authorization)

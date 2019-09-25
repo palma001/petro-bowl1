@@ -172,6 +172,20 @@
         }
       }
     },
+    "/users/{userId}": {
+      "get": {
+        "tags": ["Users"]
+      },
+      "put": {
+        "tags": ["Users"]
+      },
+      "delete": {
+        "tags": ["Users"]
+      },
+      "patch": {
+        "tags": ["Users"]
+      }
+    },
     "/events": {
       "get": {
         "tags": [

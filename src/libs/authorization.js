@@ -17,6 +17,7 @@ module.exports = app => {
           })
         }
       })
+      next()
     }
   }
   return middleware
