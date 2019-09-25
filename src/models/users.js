@@ -1,4 +1,5 @@
 module.exports = (sequelize, DataType) => {
+  const bcrypt = require('bcryptjs')
 
   const Users = sequelize.define('Users', {
     id: {
@@ -58,6 +59,15 @@ module.exports = (sequelize, DataType) => {
       }
     }
   })
+
+  Users.encryptPassword = async (password) => {
+    const salt = await bcrypt.genSalt(10)
+    return bcrypt.hash(password, salt)
+  }
+
+  Users.validatePassword = function (password, confirmPassword) {
+    return bcrypt.compare(password, confirmPassword)
+  }
 
   Users.associate = (models) => {
     Users.hasMany(models.Events)

@@ -2,43 +2,32 @@ module.exports = app => {
   var jwt = require('jsonwebtoken')
   const Users = app.db.models.Users
   const controllers = {
-    createUser (req, res) {
-      Users.create(req.body)
-        .then(result => res.json(result))
-        .catch(error => {
-          res.status(412).json({msg: error.message})
-        })
+    async createUser (req, res) {
+      req.body.password = await Users.encryptPassword(req.body.password)
+      let user = await Users.create(req.body)
+      delete user.password
+      res.json(user)
     },
-    authorization (req, res) {
+    async authorization (req, res) {
       const { user, password } = req.body
-      Users.findOne({
+      let userVerified = await Users.findOne({
         where: {
-          user: user,
-          password: password
+          user: user
         }
       })
-        .then(result => {
-          let exp = Math.floor(Date.now() / 1000) + (60 * 60)
-          if (result) {
-            const token = jwt.sign(
-              {
-                data: result.dataValues,
-                exp: exp
-              },
-              'my_secret_token'
-            )
-            let response = {
-              token: token,
-              exp: exp
-            }
-            res.json(response)
-          } else {
-            res.status(401).json({ error: true, message: 'credentials invalid'})
-          }
-        })
-        .catch(error => {
-          res.status(412).json({msg: error.message})
-        })
+      if (!userVerified) {
+        res.status(401).send('Users not register')
+      }
+      const validPassword = await Users.validatePassword(password, userVerified.password)
+      if (!validPassword) {
+        res.status(401).json({message: 'password invalid', token: null})
+      }
+      const token = jwt.sign(
+        { data: userVerified.dataValues },
+        'my_secret_token',
+        { expiresIn: 60 * 60 * 24 }
+      )
+      res.json({message: 'session started', token})
     }
   }
   return controllers

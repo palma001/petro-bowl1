@@ -20,6 +20,7 @@ module.exports = app => {
         res.status(412).json({msg: error.message})
       })
   })
+  
   app.route('/users')
     .post(middelware.admin, Users.createUser)
 
