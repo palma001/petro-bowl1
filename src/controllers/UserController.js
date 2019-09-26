@@ -6,7 +6,7 @@ module.exports = app => {
       req.body.password = await Users.encryptPassword(req.body.password)
       let user = await Users.create(req.body)
       delete user.password
-      res.json(user)
+      return res.json(user)
     },
     async authorization (req, res) {
       const { user, password } = req.body
@@ -16,18 +16,18 @@ module.exports = app => {
         }
       })
       if (!userVerified) {
-        res.status(401).send('Users not register')
+        return res.status(401).send('Users not register')
       }
       const validPassword = await Users.validatePassword(password, userVerified.password)
       if (!validPassword) {
-        res.status(401).json({message: 'password invalid', token: null})
+        return res.status(401).json({message: 'password invalid', token: null})
       }
       const token = jwt.sign(
         { data: userVerified.dataValues },
         'my_secret_token',
         { expiresIn: 60 * 60 * 24 }
       )
-      res.json({message: 'session started', token})
+      return res.json({message: 'session started', token})
     }
   }
   return controllers

@@ -16,6 +16,7 @@ module.exports = app => {
             message: 'Unauthorized'
           })
         }
+        next()
       })
     }
   }

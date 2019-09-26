@@ -7,13 +7,9 @@ module.exports = (sequelize, DataType) => {
       primaryKey: true,
       autoIncrement: true
     },
-    userId: {
-      type: DataType.STRING,
-      primaryKey: true
-    },
     eventId: {
       type: DataType.STRING,
-      primaryKey: true
+      foreignKey: true
     },
     name: {
       type: DataType.STRING,
@@ -29,7 +25,7 @@ module.exports = (sequelize, DataType) => {
         notEmpty: true
       }
     },
-    rol: {
+    rols: {
       type: DataType.STRING,
       allowNull: false,
       validate: {
@@ -70,7 +66,11 @@ module.exports = (sequelize, DataType) => {
   }
 
   Users.associate = (models) => {
-    Users.hasMany(models.Events)
+    Users.hasMany(models.Events, {
+      foreignKey: 'eventId',
+      sourceKey: 'id'
+
+    })
   }
 
   return Users

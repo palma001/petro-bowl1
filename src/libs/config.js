@@ -1,12 +1,21 @@
-const mysql2 = require('mysql2')
+const pg = require('pg')
 module.exports = {
   database: 'petro_bowl',
-  username: 'root',
-  password: '',
+  username: 'ramon',
+  password: '123456',
   params: {
-    dialect: 'mysql',
+    host: 'localhost',
+    dialect: 'postgres',
     storage: 'task-db.sql',
-    dialectModule: mysql2,
+    dialectModule: pg,
+    pool:{
+      max: 5,
+      min: 0,
+      require:30000,
+      idle:false
+
+    },
+    logging: false,
     define: {
       underscored: true
     },
