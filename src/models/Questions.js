@@ -13,6 +13,13 @@ module.exports = (sequelise, DataType) => {
     			notEmpty: true
     		}
     	},
+    	status: {
+    		type: DataType.STRING,
+    		allowNull: false,
+    		validate: {
+    			notEmpty: true
+    		}
+    	},
     	reply: {
     		type: DataType.STRING,
     		allowNull: false,
