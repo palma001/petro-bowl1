@@ -1,28 +1,27 @@
 module.exports = (sequelise, DataType) => {
-
-	const Phase = sequelise.define('Phase', {
+	const Questions = sequelise.define('Questions', {
 
 		id: {
       		type: DataType.INTEGER,
       		primaryKey: true,
       		autoIncrement: true
-  		},
-
-  		eventId: {
-      		type: DataType.INTEGER,
-      		foreignKey: true
     	},
-
-    	namePhase: {
+    	question: {
     		type: DataType.STRING,
     		allowNull: false,
     		validate: {
     			notEmpty: true
     		}
     	},
-
-    	numPhase: {
-    		type: DataType.INTEGER,
+    	reply: {
+    		type: DataType.STRING,
+    		allowNull: false,
+    		validate: {
+    			notEmpty: true
+    		}
+    	},
+    	typeQuestion: {
+    		type: DataType.STRING,
     		allowNull: false,
     		validate: {
     			notEmpty: true
@@ -44,22 +43,19 @@ module.exports = (sequelise, DataType) => {
         		notEmpty: true
       		}
     	}
-   
+
+
+
 	})
+	Questions.associate = (models) => {
 
-	Phase.associate = (models) => {
-		Phase.belongsTo(models.Events, {
-			foreignKey: 'eventId',
-      		sourceKey: 'id'
+		Questions.hasMany(models.Questions_round, {
+			foreignKey: 'questionId',
+			targetKey: 'id'			      		
 		})
 
-		Phase.hasMany(models.Confrontation, {
-			foreignKey: 'phaseId',
-      		targetKey: 'id'
-		})
+	}
 
-    }
-
-    return Phase
+	return Questions
 
 }

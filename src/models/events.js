@@ -64,13 +64,7 @@ module.exports = (sequelize, DataType) => {
   })
 
   Events.associate = (models) => {
-    Events.belongsTo(models.Users,{
-      foreignKey: 'eventId',
-      targetKey: 'id'
-
-    })
-
-    Events.belongsTo(models.Phase,{
+    Events.hasMany(models.Phase,{
       foreignKey: 'eventId',
       targetKey: 'id'
 

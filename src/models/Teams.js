@@ -43,14 +43,32 @@ module.exports =(sequelise, DataType) => {
 	})
 
 	Teams.associate = (models) => {
-		Teams.belongsTo(models.Confrontation, {
+		Teams.hasMany(models.Confrontation, {
 			foreignKey: 'teamA',
       		targetKey: 'id'
 		})
 
-		Teams.belongsTo(models.Confrontation, {
+		Teams.hasMany(models.Confrontation, {
 			foreignKey: 'teamB',
       		targetKey: 'id'
+		})
+
+		Teams.hasMany(models.Questions_round, {
+			foreignKey: 'teamA',
+      		targetKey: 'id'
+
+		})
+
+		Teams.hasMany(models.Questions_round, {
+			foreignKey: 'teamB',
+      		targetKey: 'id'
+
+		})
+
+		Teams.hasMany(models.Competitors, {
+			foreignKey: 'teamId',
+      		targetKey: 'id'
+
 		})
 
     }

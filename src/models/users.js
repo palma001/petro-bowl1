@@ -2,15 +2,18 @@ module.exports = (sequelize, DataType) => {
   const bcrypt = require('bcryptjs')
 
   const Users = sequelize.define('Users', {
+   
     id: {
       type: DataType.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
+
     eventId: {
-      type: DataType.STRING,
+      type: DataType.INTEGER,
       foreignKey: true
-    },
+      },
+
     name: {
       type: DataType.STRING,
       allowNull: false,
@@ -18,6 +21,7 @@ module.exports = (sequelize, DataType) => {
         notEmpty: true
       }
     },
+
     lastname: {
       type: DataType.STRING,
       allowNull: false,
@@ -25,6 +29,7 @@ module.exports = (sequelize, DataType) => {
         notEmpty: true
       }
     },
+
     rols: {
       type: DataType.STRING,
       allowNull: false,
@@ -32,6 +37,7 @@ module.exports = (sequelize, DataType) => {
         notEmpty: true
       }
     },
+
     email: {
       type: DataType.STRING,
       unique: true,
@@ -40,6 +46,7 @@ module.exports = (sequelize, DataType) => {
         notEmpty: true
       }
     },
+
     user: {
       type: DataType.STRING,
       allowNull: false,
@@ -47,6 +54,7 @@ module.exports = (sequelize, DataType) => {
         notEmpty: true
       }
     },
+
     password: {
       type: DataType.STRING,
       allowNull: false,
@@ -66,11 +74,7 @@ module.exports = (sequelize, DataType) => {
   }
 
   Users.associate = (models) => {
-    Users.hasMany(models.Events, {
-      foreignKey: 'eventId',
-      sourceKey: 'id'
-
-    })
+   
   }
 
   return Users
