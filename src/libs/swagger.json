@@ -13,7 +13,7 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host": "localhost:3000",
+  "host": "192.168.10.50:3000",
   "basePath": "",
   "tags": [
     {
@@ -21,7 +21,7 @@
       "description": "Operations about users",
       "externalDocs": {
         "description": "Find out more about our store",
-        "url": "http://localhost:3000"
+        "url": "http://192.168.10.50:3000"
       }
     },
     {
@@ -29,7 +29,7 @@
       "description": "Operations about events",
       "externalDocs": {
         "description": "Find out more about our store",
-        "url": "http://localhost:3000"
+        "url": "http://192.168.10.50:3000"
       }
     },
     {
@@ -37,7 +37,7 @@
       "description": "Operations about teams",
       "externalDocs": {
         "description": "Find out more about our store",
-        "url": "http://localhost:3000"
+        "url": "http://192.168.10.50:3000"
       }
     },
     {
@@ -45,7 +45,7 @@
       "description": "Operations about competitors",
       "externalDocs": {
         "description": "Find out more about our store",
-        "url": "http://localhost:3000"
+        "url": "http://192.168.10.50:3000"
       }
     },
     {
@@ -53,7 +53,7 @@
       "description": "Operations about events",
       "externalDocs": {
         "description": "Find out more about our store",
-        "url": "http://localhost:3000"
+        "url": "http://192.168.10.50:3000"
       }
     },
     {
@@ -61,7 +61,7 @@
       "description": "Operations about confrontation",
       "externalDocs": {
         "description": "Find out more about our store",
-        "url": "http://localhost:3000"
+        "url": "http://192.168.10.50:3000"
       }
     },
     {
@@ -69,7 +69,7 @@
       "description": "Operations about question round",
       "externalDocs": {
         "description": "Find out more about our store",
-        "url": "http://localhost:3000"
+        "url": "http://192.168.10.50:3000"
       }
     }
   ],
@@ -83,7 +83,7 @@
         "tags": [
           "Users"
         ],
-        "summary": "authorization user",
+        "summary": "login",
         "description": "",
         "produces": [
           "application/json"
@@ -183,13 +183,12 @@
           "application/json"
         ],
         "parameters": [
-        	{
-        		"name": "eventId",
-        		"in": "path",
-        		"description": "Identifer events",
-        		"type": "integer",
-            "format": "int64"
-        	}
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "header token",
+            "type": "string"
+          }
         ], 
         "responses": {
           "200": {
@@ -204,26 +203,35 @@
         "tags": [
           "Events"
         ],
-        "summary": "Create user",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "createUser",
+        "summary": "Create events",
+        "description": "Create Events to petro-bowl",
+        "operationId": "createEvents",
         "produces": [
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "header token",
+            "type": "string"
+          },
           {
             "in": "body",
             "name": "body",
             "description": "Created user object",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Users"
+              "$ref": "#/definitions/events"
             }
           }
         ],
         "responses": {
           "200": {
             "description": "successful operation"
+          },
+          "404": {
+            "description": "event not found"
           }
         }
       }
@@ -239,6 +247,12 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "header token",
+            "type": "string"
+          },
           {
             "name": "eventId",
             "in": "path",
@@ -267,12 +281,27 @@
         ],
         "parameters": [
           {
+            "name": "authorization",
+            "in": "header",
+            "description": "header token",
+            "type": "string"
+          },
+          {
             "name": "eventId",
             "in": "path",
             "description": "Identifer events",
             "type": "integer",
             "format": "int64"
-          }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/events"
+            }
+          }  
         ], 
         "responses": {
           "200": {
@@ -293,6 +322,12 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "header token",
+            "type": "string"
+          },
           {
             "name": "eventId",
             "in": "path",
@@ -316,33 +351,175 @@
         ]
       }
     },
-    "events/{eventId}/teams": {
+    "/teams": {
       "get": {
         "tags": [
           "Teams"
-        ]
+        ],
+        "summary": "Get Teams ",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "header token",
+            "type": "string"
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "404": {
+            "description": "teams not found"
+          }
+        }
       },
       "post": {
         "tags": [
           "Teams"
-        ]
+        ],
+        "summary": " Create Teams ",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "header token",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/teams"
+            }
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "404": {
+            "description": "teams not found"
+          }
+        }
       }
     },
-    "events/{eventId}/teams/{teamId}": {
+    "/teams/{teamId}": {
       "get": {
         "tags": [
           "Teams"
-        ]
+        ],
+        "summary": "Get Teams by TeamsId ",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "header token",
+            "type": "string"
+          },
+          {
+            "name": "teamId",
+            "in": "path",
+            "description": "Identifer teams",
+            "type": "integer",
+            "format": "int64"
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "404": {
+            "description": "teams not found"
+          }
+        }
       },
       "put": {
         "tags": [
           "Teams"
-        ]
+        ],
+        "summary": "Update by Identifer events and teams",
+        "description": "",
+        "produces":[
+          "application/json"],
+        "parameters":[
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "header token",
+            "type": "string"
+          },
+          {"name": "teamId",
+            "in": "path",
+            "description": "Identifer teams",
+            "type": "integer",
+            "format": "int64"
+          },
+          {"name": "body",
+            "in": "body",
+            "description": "Identifer teams",
+            "required": true,
+            "schema":{
+              "$ref": "#/definitions/teams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "404": {
+            "description": "teams not found"
+          }
+        }
       },
       "delete": {
         "tags": [
           "Teams"
-        ]
+        ],
+        "summary": "delete Teams ",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "header token",
+            "type": "string"
+          },
+          {
+            "name": "teamId",
+            "in": "path",
+            "description": "Identifer teams",
+            "type": "integer",
+            "format": "int64"
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "404": {
+            "description": "teams not found"
+          }
+        }
       },
       "patch": {
         "tags": [
@@ -354,7 +531,38 @@
       "get": {
         "tags": [
           "Competitors"
-        ]
+        ],
+        "summary": "Get Competitors by TeamsId ",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "header token",
+            "type": "string"
+          },
+          {
+            "name": "teamId",
+            "in": "path",
+            "description": "Identifer teams",
+            "type": "integer",
+            "format": "int64"
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "204": {
+            "description": "successful operation"
+          },
+          "404": {
+            "description": "teams not found"
+          }
+        }
       },
       "post": {
         "tags": [
@@ -418,19 +626,88 @@
         ]
       }
     },
-    "events/{eventId}/{phaseId}/confrontation": {
+    "/events/{eventId}/{phaseId}/confrontation": {
       "get": {
         "tags": [
           "Confrontation"
-        ]
+        ],
+        "summary": "Get all Confrontation",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "path",
+            "description": "",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "phaseId",
+            "in": "path",
+            "description": "",
+            "type": "integer",
+            "format": "int64"
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "404": {
+            "description": "Confrontations not found"
+          }
+        }
       },
       "post": {
         "tags": [
           "Confrontation"
-        ]
+        ],
+        "summary": "Create confrontation",
+        "description": "Create confrontation to petro-bowl",
+        "operationId": "createConfrontation",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+           {
+            "name": "eventId",
+            "in": "path",
+            "description": "",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "phaseId",
+            "in": "path",
+            "description": "",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Created confrontation object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/confrontation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "404": {
+            "description": "event not found"
+          }
+        }
       }
+      
     },
-    "events/{eventId}/{phaseId}/confrontation/{confrontationId}": {
+    "/events/{eventId}/{phaseId}/confrontation/{confrontationId}": {
       "get": {
         "tags": [
           "Confrontation"
@@ -456,29 +733,177 @@
       "get": {
         "tags": [
           "QuestionRound"
-        ]
+        ],
+        "summary": "Get all user",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "header token",
+            "type": "string"
+          },
+          {
+            "name": "confrontationId",
+            "in": "path",
+            "description": "header token",
+            "type": "string"
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
       },
       "post": {
         "tags": [
           "QuestionRound"
-        ]
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "header token",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/questionRound"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
       }
     },
     "/confrontation/{confrontationId}/question-round/{questionRoundId}": {
       "get": {
         "tags": [
           "QuestionRound"
-        ]
+        ],
+        "summary": "Get find by confrontationId and questionRoundId",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "confrontationId",
+            "in": "path",
+            "description": "Identifer confrontation",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "questionRoundId",
+            "in": "path",
+            "description": "Identifer questionRound",
+            "type": "integer",
+            "format": "int64"
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
       },
       "put": {
         "tags": [
           "QuestionRound"
-        ]
+        ],
+        "summary": "Update user by event name",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "confrontationId",
+            "in": "path",
+            "description": "Identifer confrontation",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "questionRoundId",
+            "in": "path",
+            "description": "Identifer questionRound",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created questions Round",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/questionRound"
+            }
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
       },
       "delete": {
         "tags": [
           "QuestionRound"
-        ]
+        ],
+        "summary": "Delete question-round by questionRoundId",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "confrontationId",
+            "in": "path",
+            "description": "Identifer confrontation",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "questionRoundId",
+            "in": "path",
+            "description": "Identifer questionRound",
+            "type": "integer",
+            "format": "int64"
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }  
       },
       "patch": {
         "tags": [
@@ -504,12 +929,9 @@
     "users": {
       "type": "object",
       "properties": {
-        "userId": {
-          "type": "string",
-          "required": true
-        },
+        
         "eventId": {
-          "type": "string",
+          "type": "integer",
           "required": true
         },
         "name": {
@@ -520,7 +942,7 @@
           "type": "string",
           "required": true
         },
-        "rol": {
+        "rols": {
           "type": "string",
           "required": true
         },
@@ -533,6 +955,156 @@
           "required": true
         },
         "password": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "events":{
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "required": true
+      },
+
+      "name": {
+        "type": "string",
+        "required": true
+      },
+
+      "organizer": {
+        "type": "string",
+        "required": true
+      },
+
+      "address": {
+        "type": "string",
+        "required": true
+      },
+
+      "dateEvent": {
+        "type": "Date",
+        "required": true,
+        "example": "2018/01/30 23:30:14"
+      },
+
+      "created_by": {
+        "type": "string",
+        "required": true
+      },
+
+      "updated_by": {
+        "type": "string",
+        "required": true
+      }
+      }
+    },
+    "questionRound": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "required": true
+        },
+        "confrontationId": {
+          "type": "integer",
+          "required": true
+        },
+        "questionId": {
+          "type": "integer",
+          "required": true
+
+        },
+        "teamA": {
+          "type": "integer",
+          "required": true
+
+        },
+        "teamB": {
+          "type": "integer",
+          "required": true
+
+        },
+        "scoreA": {
+          "type": "string",
+          "required": true
+
+        },
+        "scoreB": {
+          "type": "string",
+          "required": true
+
+        },
+        "created_by": {
+          "type": "string",
+          "required": true
+        },
+    
+        "updated_by": {
+          "type": "string",
+          "required": true
+
+        }
+
+
+      } 
+    },
+    "teams":{
+      "type": "object",
+      "properties":{
+        "id": {
+          "type": "integer",
+          "required": true
+        },
+      
+        "name": {
+          "type": "string",
+          "required": true
+        },
+      
+        "university": {
+          "type": "string",
+          "required": true
+        },
+
+        "created_by": {
+          "type": "string",
+          "required": true
+        },
+    
+        "updated_by": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "confrontation": {
+      "type": "object",
+      "properties":{
+        "id": {
+          "type": "integer",
+          "required": true          
+        },
+
+        "phaseId": {
+          "type": "integer",
+          "required": true
+        },
+        "teamA": {
+          "type": "integer",
+          "required": true
+        },
+        "teamB": {
+          "type": "integer",
+          "required": true
+        },
+        "created_by": {
+          "type": "string",
+          "required": true
+        },
+    
+        "updated_by": {
           "type": "string",
           "required": true
         }

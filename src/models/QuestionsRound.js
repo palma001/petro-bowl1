@@ -1,6 +1,6 @@
 module.exports = (sequelise, DataType) => {
 
-	const Questions_round = sequelise.define('Questions_round', {
+	const QuestionsRound = sequelise.define('QuestionsRound', {
 
 		id: {
       		type: DataType.INTEGER,
@@ -62,27 +62,27 @@ module.exports = (sequelise, DataType) => {
 
 	})
 
-	Questions_round.associate = (models) => {
-		Questions_round.belongsTo(models.Confrontation, {
+	QuestionsRound.associate = (models) => {
+		QuestionsRound.belongsTo(models.Confrontation, {
 			foreignKey: 'confrontationId',
 			sourceKey: 'id'
 		})
 
-		Questions_round.belongsTo(models.Teams, {
+		QuestionsRound.belongsTo(models.Teams, {
 			foreignKey: 'teamA',
 			sourceKey: 'id'
 		})
 
-		Questions_round.belongsTo(models.Teams, {
+		QuestionsRound.belongsTo(models.Teams, {
 			foreignKey: 'teamB',
 			sourceKey: 'id'
 		})
 
-		Questions_round.belongsTo(models.Questions, {
+		QuestionsRound.belongsTo(models.Questions, {
 			foreignKey: 'questionId',
 			sourceKey: 'id'												
 		})
 	}
 	
-	return Questions_round
+	return QuestionsRound
 }

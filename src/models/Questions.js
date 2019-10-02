@@ -56,7 +56,7 @@ module.exports = (sequelise, DataType) => {
 	})
 	Questions.associate = (models) => {
 
-		Questions.hasMany(models.Questions_round, {
+		Questions.hasMany(models.QuestionsRound, {
 			foreignKey: 'questionId',
 			targetKey: 'id'			      		
 		})

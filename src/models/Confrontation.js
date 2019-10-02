@@ -53,7 +53,7 @@ module.exports =(sequelise, DataType) => {
       		sourceKey: 'id'
 		})
 
-		Confrontation.hasMany(models.Questions_round, {
+		Confrontation.hasMany(models.QuestionsRound, {
 			foreignKey: 'confrontationId',
 			targetKey: 'id'
 

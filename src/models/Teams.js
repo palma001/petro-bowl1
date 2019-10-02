@@ -53,13 +53,13 @@ module.exports =(sequelise, DataType) => {
       		targetKey: 'id'
 		})
 
-		Teams.hasMany(models.Questions_round, {
+		Teams.hasMany(models.QuestionsRound, {
 			foreignKey: 'teamA',
       		targetKey: 'id'
 
 		})
 
-		Teams.hasMany(models.Questions_round, {
+		Teams.hasMany(models.QuestionsRound, {
 			foreignKey: 'teamB',
       		targetKey: 'id'
 

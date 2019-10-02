@@ -23,6 +23,7 @@
     "bcrypt": "^3.0.6",
     "bcryptjs": "^2.4.3",
     "consign": "^0.1.6",
+    "cors": "^2.8.5",
     "express": "^4.16.3",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^1.7.0",

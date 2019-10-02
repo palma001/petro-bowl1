@@ -24,6 +24,6 @@ module.exports = app => {
   app.route('/users')
     .post(middelware.auth, Users.createUser)
 
-  app.route('/users/authorization')
+  app.route('/users/login')
     .post(Users.authorization)
 }
