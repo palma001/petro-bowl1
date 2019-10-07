@@ -78,7 +78,7 @@
     "https"
   ],
   "paths": {
-    "/users/authorization": {
+    "/users/login": {
       "post": {
         "tags": [
           "Users"
@@ -170,6 +170,121 @@
             "description": "User not found"
           }
         }
+      }
+    },
+    "/users/{usersId}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get one user",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "header token",
+            "type": "string"
+          },
+          {
+            "name": "usersId",
+            "in": "path",
+            "description": "Identifer users",
+            "type": "integer",
+            "format": "int64"
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update user by Users name",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "header token",
+            "type": "string"
+          },
+          {
+            "name": "usersId",
+            "in": "path",
+            "description": "Identifer users",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/users"
+            }
+          }  
+        ], 
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Delete user by userId",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "header token",
+            "type": "string"
+          },
+          {
+            "name": "usersId",
+            "in": "path",
+            "description": "Identifer events",
+            "type": "integer",
+            "format": "int64"
+          }
+        ], 
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Users"
+        ]
       }
     },
     "/events": {
@@ -963,41 +1078,37 @@
     "events":{
       "type": "object",
       "properties": {
-        "id": {
-          "type": "integer",
+        
+        "name": {
+          "type": "string",
           "required": true
-      },
+        },
 
-      "name": {
-        "type": "string",
-        "required": true
-      },
+        "organizer": {
+          "type": "string",
+          "required": true
+        },
 
-      "organizer": {
-        "type": "string",
-        "required": true
-      },
+        "address": {
+          "type": "string",
+          "required": true
+        },
 
-      "address": {
-        "type": "string",
-        "required": true
-      },
+        "dateEvent": {
+          "type": "Date",
+          "required": true,
+          "example": "2018/01/30 23:30:14"
+        },
 
-      "dateEvent": {
-        "type": "Date",
-        "required": true,
-        "example": "2018/01/30 23:30:14"
-      },
+        "created_by": {
+          "type": "string",
+          "required": true
+        },
 
-      "created_by": {
-        "type": "string",
-        "required": true
-      },
-
-      "updated_by": {
-        "type": "string",
-        "required": true
-      }
+        "updated_by": {
+          "type": "string",
+          "required": true
+        }
       }
     },
     "questionRound": {
@@ -1053,11 +1164,7 @@
     "teams":{
       "type": "object",
       "properties":{
-        "id": {
-          "type": "integer",
-          "required": true
-        },
-      
+              
         "name": {
           "type": "string",
           "required": true

@@ -3,10 +3,10 @@ module.exports = app => {
 
 	app.route('/teams')
 		.get(Teams.getTeams)
-		.post(Teams.createTask)
+		.post(Teams.createTeam)
 
-	app.route('/teams/:teamId')
-		.get(Teams.getTaskOne)
-		.put(Teams.updateTask)
-		.delete(Teams.deleteTask)
+	app.route('/teams/:id')
+		.get(Teams.getOneTeam)
+		.put(Teams.updateTeam)
+		.delete(Teams.deleteTeam)
 }

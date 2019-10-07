@@ -3,10 +3,10 @@ module.exports = app => {
 
   app.route('/events')
     .get(Events.getEvents)
-    .post(Events.createTask)
+    .post(Events.createEvent)
 
   app.route('/events/:id')
-    .get(Events.getTaskOne)
-    .put(Events.updateTask)
-    .delete(Events.deleteTask)
+    .get(Events.getOneEvent)
+    .put(Events.updateEvent)
+    .delete(Events.deleteEvent)
 }

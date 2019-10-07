@@ -8,34 +8,47 @@ module.exports = app => {
 					res.status(412).json({msg: error.message})
 				})
 		},
-		createTask(req, res){
+		createTeam(req, res){
 			Teams.create(req.body)
 				.then(result => res.json(result))
 				.catch(error => {res.status(412).json({msg: error.message})
 				})
 		},
-		getTaskOne(req, res){
-			Teams.findOne({where: res.params})
+		getOneTeam(req, res){
+			Teams.findOne({where: req.params})
 				.then(result => {
 					if (result){
 						res.json(result)
 
-					}else{res.sendstatus(204)}	
+					} else {res.sendStatus(404)}	
 
 				})
-				.catch(error => { res.status(412).json({msg: res.message})
+				.catch(error => { res.status(412).json({msg: error.message})
 				})	
 		},
-		updateTask(req, res) {
-			Teams.update(req.body, {where: req.params})
-				.then(result => res.json(result))
-				.catch(error => {res.status(204).json({msg: error.message})
+		updateTeam(req, res) {
+			Teams.findById(req.params.id)
+			.then(result => {
+				if(result) {
+					Teams.update(req.body, {where: req.params})
+					.then(result => res.json(req.body))
+					.catch(error => {res.status(412).json({msg: error.message})
+					})
+				} else{res.sendStatus(404)}
 			})
+			.catch(error => {res.status(412).json({msg: error.message})})
 		},
-		deleteTask(req, res){
-			Teams.destroy(req.params, {where: req.params})
-				.then(result => res.sendStatus(200).json({message: 'Task delete succefull'}))
-				.catch(error => {res.status(204).json({msg: error.message})})
+		deleteTeam(req, res){
+			Teams.findById(req.params.id)
+			.then(result => {
+				if(result){
+					Teams.destroy({where: req.params})
+				 	.then(result => res.sendStatus(200).json({message: 'Team delete succefull'}))
+					.catch(error => {res.sendStatus(412).json({msg: error.message})})
+				}else{res.sendStatus(404)}
+			})
+			.catch(error => {res.sendStatus(412).json({msg: error.message})})
+
 		}
 
 	}

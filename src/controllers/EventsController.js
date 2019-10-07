@@ -8,14 +8,13 @@ module.exports = app => {
           res.status(412).json({msg: error.message})
         })
     },
-    createTask (req, res) {
+    createEvent (req, res) {
       Events.create(req.body)
-        .then(result => res.json(result))
-        .catch(error => {
-          res.status(412).json({msg: error.message})
-        })
+      .then(result => res.json(req.body))
+      .catch(error => {
+        res.status(412).json({msg: error.message})})
     },
-    getTaskOne (req, res) {
+    getOneEvent (req, res) {
       Events.findOne({
         where: req.params
       })
@@ -23,26 +22,48 @@ module.exports = app => {
           if (result) {
             res.json(result)
           } else {
-            res.sendStatus(204)
+            res.sendStatus(404)
           }
         })
         .catch(error => {
           res.status(412).json({msg: error.message})
         })
     },
-    updateTask(req, res) {
-      Events.update(req.body, {where: req.params})
-        .then(result => res.sendStatus(200).json(result))
+    updateEvent(req, res) {
+      Events.findById(req.params.id)
+       .then(result => {
+          if (result) {
+            
+            Events.update(req.body, {where: req.params})
+              .then(result => res.json(req.body))
+              .catch(error => {
+                res.status(412).json({msg: error.message})
+              })            
+          } else {
+            res.sendStatus(404)
+          }
+        })
         .catch(error => {
           res.status(412).json({msg: error.message})
-        })
+        })        
     },
-    deleteTask (req, res) {
-      Events.destroy({where: req.params})
-        .then(result => res.sendStatus(200).json({message: 'Task deleted succefull'}))
-        .catch(error => {
-          res.status(204).json({msg: error.message})
-        })
+    deleteEvent (req, res) {
+      Events.findById(req.params.id)
+      .then(result =>  {
+        if (result) { 
+          Events.destroy({where: req.params})
+          .then(result => res.sendStatus(200).json({message: 'Event deleted succefull'}))
+          .catch(error => {
+            res.status(412).json({msg: error.message})
+          })           
+        } else {
+            res.sendStatus(404)
+        }
+      })
+      .catch(error => {
+          res.status(412).json({msg: error.message})
+      })
+      
     }
   }
   return controllers

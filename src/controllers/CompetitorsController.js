@@ -7,21 +7,21 @@ module.exports = app => {
           if (result) {
             res.json(result)
           } else {
-            res.sendStatus(204).json({message: 'not record'})
+            res.sendStatus(404).json({message: 'not record'})
           }
         })
         .catch(error => {
           res.status(412).json({msg: error.message})
         })
     },
-    createTask (req, res) {
+    createCompetitor (req, res) {
       Competitors.create(req.body)
         .then(result => res.json(result))
         .catch(error => {
           res.status(412).json({msg: error.message})
         })
     },
-    getTaskOne (req, res) {
+    getOneCompetitor (req, res) {
       Competitors.findOne({
         where: req.params
       })
@@ -36,16 +36,16 @@ module.exports = app => {
           res.status(412).json({msg: error.message})
         })
     },
-    updateTask(req, res) {
+    updateCompetitor(req, res) {
       Competitors.update(req.body, {where: req.params})
         .then(result => res.sendStatus(200).json(result))
         .catch(error => {
           res.status(412).json({msg: error.message})
         })
     },
-    deleteTask (req, res) {
+    deleteCompetitor (req, res) {
       Competitors.destroy({where: req.params})
-        .then(result => res.sendStatus(200).json({message: 'Task deleted succefull'}))
+        .then(result => res.sendStatus(200).json({message: 'Competitor deleted succefull'}))
         .catch(error => {
           res.status(204).json({msg: error.message})
         })
